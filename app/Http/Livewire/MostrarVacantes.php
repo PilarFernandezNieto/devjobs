@@ -7,6 +7,18 @@ use Livewire\Component;
 
 class MostrarVacantes extends Component
 {
+
+    // ESTO PARA EL EVENTO CON EMIT
+     protected $listeners = ['eliminarVacante'];
+
+    // public function prueba($vacante_id){
+    //     dd($vacante_id);
+    // }
+
+
+    public function eliminarVacante(Vacante $vacante){
+        $vacante->delete();
+    }
     public function render()
     {
 
