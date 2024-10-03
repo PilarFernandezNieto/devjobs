@@ -18,6 +18,7 @@ class CrearVacante extends Component
     public $descripcion;
     public $imagen;
 
+
     // Implementa la subida de imagenes
     use WithFileUploads;
 
