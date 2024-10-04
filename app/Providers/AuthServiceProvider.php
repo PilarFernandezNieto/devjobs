@@ -29,12 +29,12 @@ class AuthServiceProvider extends ServiceProvider
 
         // Esta configuración no es necesaria porque traduce directamente el es.json
         // Así se haría si no estuviera
-        /*VerifyEmail::toMailUsing(function ($notificable, $url) {
+        VerifyEmail::toMailUsing(function ($notifiable, $url) {
             return (new MailMessage)
                 ->subject('Verifica tu cuenta')
                 ->line('Tu cuenta ya está casi lista, solo tienes que pinchar en el siguiente enlace')
                 ->action('Confirmar Cuenta', $url)
                 ->line('Si no has creado esta cuenta puedes ignorar este mensaje');
-        });*/
+        });
     }
 }

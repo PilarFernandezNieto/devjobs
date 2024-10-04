@@ -10,12 +10,31 @@
                 <span class="normal-case font-normal">{{ $vacante->ultimo_dia->toFormattedDateString() }}</span>
             </p>
             <p class="font-bold text-sm uppercase text-gray-800 my-3">Categoría:
-                <span class="normal-case font-normal">{{ $vacante->categoria_id }}</span>
+                <span class="normal-case font-normal">{{ $vacante->categoria->categoria }}</span>
             </p>
             <p class="font-bold text-sm uppercase text-gray-800 my-3">Salario:
-                <span class="normal-case font-normal">{{ $vacante->salario_id }}</span>
+                <span class="normal-case font-normal">{{ $vacante->salario->salario }}</span>
             </p>
 
         </div>
     </div>
+
+    <div class="md:grid md:grid-cols-6 gap-4">
+        <div class="md:col-span-2">
+            <img src="{{ asset('storage/vacantes/' . $vacante->imagen) }}"
+                alt="{{ 'Imagen vacante_' . $vacante->titulo }}">
+        </div>
+        <div class="md:col-span-4">
+            <h2 class="text-2xl font-bold mb-5">Descripción del puesto</h2>
+            <p>{{ $vacante->descripcion }}</p>
+        </div>
+    </div>
+
+    @guest
+        <div class="mt-5 bg-gray-50 border border-dashed p-5 text-center">
+            <p>¿Deseas solicitar este puesto? <a href="{{ route('register') }}" class="font-bold text-indigo-600">Regístrate
+                    y accede</a></p>
+        </div>
+    @endguest
+
 </div>
