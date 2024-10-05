@@ -33,4 +33,11 @@ class Vacante extends Model
     public function candidatos(){
         return $this->hasMany(Candidato::class);
     }
+
+    // Esta función, según los estándares de Laravel, debería de llamarse user
+    // Un user puede ser devoper o recruiter, por eso se especifica así
+    // Para que haga bien la relación se le envía el id del user para que lo relacione con el modelo
+    public function reclutador(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
