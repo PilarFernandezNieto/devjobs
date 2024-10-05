@@ -28,6 +28,14 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
+                    <!-- Pill Notificaciones -->
+                    @if (auth()->user()->rol === 2)
+                        <a class="mr-2 w-7 h-7 bg-indigo-700 hover:bg-indigo-800 rounded-full text-white text-sm font-extrabold flex flex-col justify-center items-center"
+                            href="{{ route('notificaciones') }}">
+                            {{ Auth::user()->unreadNotifications->count() }}
+                        </a>
+                    @endif
+                    <!-- Fin Pill Notificaciones -->
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -64,15 +72,15 @@
                     </x-dropdown>
                 @endauth
                 @guest
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('login')">
-                        {{ __('Inicia sesión') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('register')">
-                        {{ __('Crear cuenta') }}
-                    </x-nav-link>
-                </div>
-            @endguest
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('login')">
+                            {{ __('Inicia sesión') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')">
+                            {{ __('Crear cuenta') }}
+                        </x-nav-link>
+                    </div>
+                @endguest
             </div>
 
             <!-- Hamburger -->
@@ -95,6 +103,19 @@
 
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         @auth
+            <!-- Pill Notificaciones -->
+            @if (auth()->user()->rol === 2)
+                <div class="flex gap-2 items-center p-3">
+                    <a class="w-7 h-7 bg-indigo-700 hover:bg-indigo-800 rounded-full text-white text-sm font-extrabold flex flex-col justify-center items-center"
+                        href="{{ route('notificaciones') }}">
+                        {{ Auth::user()->unreadNotifications->count() }}
+                    </a>
+                    <p class="text-base font-medium text-gray-600">
+                        @choice('Notificación|Notificaciones', Auth::user()->unreadNotifications->count())
+                    </p>
+                </div>
+            @endif
+            <!-- Fin Pill Notificaciones -->
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                     {{ __('Mis Vacantes') }}
@@ -130,14 +151,14 @@
             </div>
         @endauth
         @guest
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('login')">
-                {{ __('Inicia sesión') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('register')">
-                {{ __('Crear cuenta') }}
-            </x-responsive-nav-link>
-        </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('login')">
+                    {{ __('Inicia sesión') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">
+                    {{ __('Crear cuenta') }}
+                </x-responsive-nav-link>
+            </div>
         @endguest
     </div>
 
