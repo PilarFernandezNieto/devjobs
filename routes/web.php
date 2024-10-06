@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\CandidatosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VacanteController;
+use App\Http\Controllers\CandidatoController;
+use App\Http\Controllers\CandidatosController;
 use App\Http\Controllers\NotificacionController;
 
 /*

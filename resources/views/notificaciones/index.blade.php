@@ -10,24 +10,28 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h1 class="text-2xl font-bold text-center my-10">Mis Notificaciones</h1>
-                    @forelse ($notificaciones as $notificacion)
-                        <div class="p-5 border-gray-200 lg:flex lg:justify-between lg:items-center">
-                            <div>
-                                <p>Tienes un nuevo candidato en:
-                                    <span class="font-bold">{{ $notificacion->data['nombre_vacante'] }}</span>
-                                </p>
-                                <p>
-                                    <span class="font-bold">{{ $notificacion->created_at->diffForHumans() }}</span>
-                                </p>
+                    <div class="divide-y divide-gray-200">
+                        @forelse ($notificaciones as $notificacion)
+                            <div class="p-5 lg:flex lg:justify-between lg:items-center">
+                                <div>
+                                    <p>Tienes un nuevo candidato en:
+                                        <span class="font-bold">{{ $notificacion->data['nombre_vacante'] }}</span>
+                                    </p>
+                                    <p>
+                                        <span class="font-bold">{{ $notificacion->created_at->diffForHumans() }}</span>
+                                    </p>
+                                </div>
+                                <div class="mt-5 lg:mt-0">
+                                    <a href="{{route('candidatos.index', $notificacion->data['id_vacante'])}}"
+                                        class="uppercase p-3 border rounded-lg font-bold text-sm bg-indigo-500 text-white">Ver
+                                        Candidatos</a>
+                                </div>
                             </div>
-                            <div class="mt-5 lg:mt-0">
-                                <a href="" class="uppercase p-3 border rounded-lg font-bold text-sm bg-indigo-500 text-white">Ver Candidatos</a>
-                            </div>
-                        </div>
 
-                    @empty
-                        <p class="text-center text-gray-600">No hay notificaciones nuevas</p>
-                    @endforelse
+                        @empty
+                            <p class="text-center text-gray-600">No hay notificaciones nuevas</p>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
