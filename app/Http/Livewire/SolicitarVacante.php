@@ -17,32 +17,41 @@ class SolicitarVacante extends Component
         'cv' => 'required|mimes:pdf'
     ];
 
-    public function mount(Vacante $vacante){
-       $this->vacante = $vacante;
+    public function mount(Vacante $vacante)
+    {
+        $this->vacante = $vacante;
     }
 
     public function solicitar()
     {
         $datos = $this->validate();
 
-        // Almacenar el cv
-        $cv = $this->cv->store('public/cv');
-        $datos['cv'] = str_replace('public/cv/', '', $cv);
+        // Valida que un reclutador no pueda solicitar un puesto que ha creado
+        if (auth()->user()->id === $this->vacante->reclutador->id) {
+            session()->flash('error', 'No puedes solicitar un puesto que tu mismo has publicado');
 
-        // Crear el candidato a la vacante
-        $this->vacante->candidatos()->create([
-            'user_id' => auth()->user()->id,
-            'cv' => $datos['cv']
-        ]);
+        // Valida que un solicitante no pueda volver a solicitar el mismo puesto
+        } else if ($this->vacante->candidatos()->where('user_id', auth()->user()->id)->count() > 0) {
+            session()->flash('error', 'Ya has solicitado este puesto anteriormente');
+        } else {
 
-        // Crear notificación y enviar email
-        $this->vacante->reclutador->notify(new NuevoCandidato($this->vacante->id, $this->vacante->titulo, auth()->user()->id));
+            // Almacenar el cv
+            $cv = $this->cv->store('public/cv');
+            $datos['cv'] = str_replace('public/cv/', '', $cv);
 
-        // Mostrar al usuario mensaje de email
-        session()->flash('mensaje', 'La información se ha enviado correctamente. ¡Suerte!');
-        return redirect()->back();
+            // Crear el candidato a la vacante
+            $this->vacante->candidatos()->create([
+                'user_id' => auth()->user()->id,
+                'cv' => $datos['cv']
+            ]);
 
+            // Crear notificación y enviar email
+            $this->vacante->reclutador->notify(new NuevoCandidato($this->vacante->id, $this->vacante->titulo, auth()->user()->id));
 
+            // Mostrar al usuario mensaje de email
+            session()->flash('mensaje', 'La información se ha enviado correctamente. ¡Suerte!');
+            return redirect()->back();
+        }
     }
     public function render()
     {

@@ -5,6 +5,10 @@
         <p class="uppercase border border-green-600 bg-green-100 text-green-600 font-bold p-2 my-5 text-sm rounded-lg">
             {{ session('mensaje') }}
         </p>
+    @elseif(session()->has('error'))
+        <p class="uppercase border border-red-600 bg-red-100 text-red-600 font-bold p-2 my-5 text-sm rounded-lg">
+            {{ session('error') }}
+        </p>
     @else
         <form wire:submit.prevent='solicitar' class="w-96 mt-5">
             <div class="mb-4">

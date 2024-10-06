@@ -39,9 +39,12 @@
 
     {{-- Muestra el formulario solo para desarrolladores, no para reclutadores --}}
     {{-- El método create está en VacantePolicy --}}
-    @cannot('create', App\Models\Vacante::class)
-        <livewire:solicitar-vacante :vacante='$vacante'>
-    @endcannot
+    @auth
+        @cannot('create', App\Models\Vacante::class)
+            <livewire:solicitar-vacante :vacante='$vacante'>
+        @endcannot
+    @endauth
+
 
 
 
